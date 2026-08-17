@@ -1,4 +1,4 @@
-package re
+package retry
 
 import (
 	"context"
@@ -17,7 +17,7 @@ type ExecFn func(context.Context, unsafe.Pointer) errnov1.Code
 type RetryFn func(context.Context, unsafe.Pointer, ExecFn) errnov1.Code
 
 // Retry is main try func
-func Retry(delayFn DelayFn, max int) RetryFn {
+func Try(delayFn DelayFn, max int) RetryFn {
 
 	if delayFn == nil {
 		delayFn = LinearDelay(time.Microsecond)
@@ -64,7 +64,7 @@ func Retry(delayFn DelayFn, max int) RetryFn {
 	}
 }
 
-// RetryOnce is try 1 time
-func RetryOnce(delayFn DelayFn) RetryFn {
-	return Retry(delayFn, 1)
+// TryOnce is try 1 time
+func TryOnce(delayFn DelayFn) RetryFn {
+	return Try(delayFn, 1)
 }

@@ -1,4 +1,4 @@
-package re
+package retry
 
 import (
 	"context"
@@ -25,7 +25,7 @@ func TestThatItWork(t *testing.T) {
 	i := 0
 	data := Data{}
 
-	errno := Retry(LinearDelay(time.Microsecond), 3)(context.Background(), data.Pointer(), func(ctx context.Context, buff unsafe.Pointer) errnov1.Code {
+	errno := Try(LinearDelay(time.Microsecond), 3)(context.Background(), data.Pointer(), func(ctx context.Context, buff unsafe.Pointer) errnov1.Code {
 		if i == 2 {
 			copy(DataFrom(buff).Hello[:], []byte("Hello, World"))
 			return errnov1.OK
